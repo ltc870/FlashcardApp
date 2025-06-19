@@ -1,0 +1,74 @@
+# Rider project files
+.idea/
+*.sln.iml
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Visual Studio Code settings (if also using VS Code)
+.vscode/
+
+# Rider caches (optional, if you want to ignore all cache files)
+.idea/.idea.Rider/
+
+# DotCover and test results
+*.coverage
+*.coveragexml
+TestResults/
+*.VisualState.xml
+
+# Local configuration
+*.local.json
+
+# SQL Server database files
+*.mdf
+*.ldf
+
+# Auto-generated files
+Generated_Code/
+
+# Rider logs (if you want to ignore them)
+.idea/.idea.Rider/.logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.rej
+
+# OS-specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# Rider specific
+.idea/.idea.FlashcardApp/.idea/.gitignore
+.idea/.idea.FlashcardApp/.idea/dataSources.xml
+.idea/.idea.FlashcardApp/.idea/indexLayout.xml
+.idea/.idea.FlashcardApp/.idea/material_theme_project_new.xml
+.idea/.idea.FlashcardApp/.idea/sqldialects.xml
