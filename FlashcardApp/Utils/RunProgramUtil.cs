@@ -1,6 +1,9 @@
 using FlashcardApp.Repository.FlashcardRepository;
+using FlashcardApp.Repository.StackRepository;
+using FlashcardApp.Repository.StudySessionRepository;
 using FlashcardApp.Services.FlashcardService;
 using FlashcardApp.Services.StackService;
+using FlashcardApp.Services.StudySessionService;
 
 namespace FlashcardApp.Utils;
 
@@ -48,9 +51,9 @@ public class RunProgramUtil
                  case "2":
                      ManageFlashcards();
                      break;
-                // case "3":
-                //     StudyArea();
-                //     break;
+                case "3":
+                    StudyArea();
+                    break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
                     break;
@@ -60,7 +63,7 @@ public class RunProgramUtil
 
     private static void ManageStacks()
     {
-        StackService stackService = new StackService(new Repository.StackRepository.StackRepository());
+        StackService stackService = new StackService(new StackRepository());
         bool closeManageStacks = false;
 
         while (closeManageStacks == false)
@@ -105,7 +108,7 @@ public class RunProgramUtil
 
     private static void ManageFlashcards()
     {
-        FlashcardService flashcardService = new FlashcardService(new Repository.FlashcardRepository.FlashcardRepository());
+        FlashcardService flashcardService = new FlashcardService(new FlashcardRepository());
         bool closeManageFlashcards = false;
 
         while (closeManageFlashcards == false)
@@ -150,6 +153,7 @@ public class RunProgramUtil
 
     private static void StudyArea()
     {
+        StudySessionService studySessionService = new StudySessionService(new StudySessionRepository(), new StackService(new StackRepository()));
         bool exitStudyArea = false;
 
         while (exitStudyArea == false)
@@ -172,9 +176,9 @@ public class RunProgramUtil
                     exitStudyArea = true;
                     UserOptions();
                     break;
-                // case "1":
-                //     studySessionService.StartStudySession();
-                //     break;
+                case "1":
+                    studySessionService.RunStudySession();
+                    break;
                 // case "2":
                 //     studySessionService.ReviewStudySession();
                 //     break;
