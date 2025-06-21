@@ -1,6 +1,9 @@
 using FlashcardApp.Repository.FlashcardRepository;
+using FlashcardApp.Repository.StackRepository;
+using FlashcardApp.Repository.StudySessionRepository;
 using FlashcardApp.Services.FlashcardService;
 using FlashcardApp.Services.StackService;
+using FlashcardApp.Services.StudySessionService;
 
 namespace FlashcardApp.Utils;
 
@@ -29,8 +32,7 @@ public class RunProgramUtil
             Console.WriteLine("Type 0 to Close Program.");
             Console.WriteLine("Type 1 Manage Stacks");
             Console.WriteLine("Type 2 Manage Flashcards");
-            Console.WriteLine("Type 3 Study");
-            Console.WriteLine("Type 4 View Study Session History");
+            Console.WriteLine("Type 3 Enter Study Area");
             Console.WriteLine("\n<---------------------------------------------------------->");
 
             string userInput = Console.ReadLine();
@@ -49,12 +51,9 @@ public class RunProgramUtil
                  case "2":
                      ManageFlashcards();
                      break;
-                // case "3":
-                //     Study();
-                //     break;
-                // case "4":
-                //     ViewStudySessionHistory();
-                //     break;
+                case "3":
+                    StudyArea();
+                    break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
                     break;
@@ -64,7 +63,7 @@ public class RunProgramUtil
 
     private static void ManageStacks()
     {
-        StackService stackService = new StackService(new Repository.StackRepository.StackRepository());
+        StackService stackService = new StackService(new StackRepository());
         bool closeManageStacks = false;
 
         while (closeManageStacks == false)
@@ -109,7 +108,7 @@ public class RunProgramUtil
 
     private static void ManageFlashcards()
     {
-        FlashcardService flashcardService = new FlashcardService(new Repository.FlashcardRepository.FlashcardRepository());
+        FlashcardService flashcardService = new FlashcardService(new FlashcardRepository());
         bool closeManageFlashcards = false;
 
         while (closeManageFlashcards == false)
@@ -145,6 +144,44 @@ public class RunProgramUtil
                 case "4":
                     flashcardService.DeleteFlashcardById();
                     break;
+                default:
+                    Console.WriteLine("\nYou entered an invalid option, please try again.");
+                    break;
+            }
+        }
+    }
+
+    private static void StudyArea()
+    {
+        StudySessionService studySessionService = new StudySessionService(new StudySessionRepository(), new StackService(new StackRepository()));
+        bool exitStudyArea = false;
+
+        while (exitStudyArea == false)
+        {
+            Console.Clear();
+            Console.WriteLine("Study Area:");
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine("<---------------------------------------------------------->\n");
+            Console.WriteLine("Type 0 to Return to Main Menu.");
+            Console.WriteLine("Type 1 to Start A Study Session");
+            Console.WriteLine("Type 2 to Review A Study Session");
+            Console.WriteLine("\n<---------------------------------------------------------->");
+            
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                case "0":
+                    Console.Clear();
+                    exitStudyArea = true;
+                    UserOptions();
+                    break;
+                case "1":
+                    studySessionService.RunStudySession();
+                    break;
+                // case "2":
+                //     studySessionService.ReviewStudySession();
+                //     break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
                     break;
