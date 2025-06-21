@@ -29,8 +29,7 @@ public class RunProgramUtil
             Console.WriteLine("Type 0 to Close Program.");
             Console.WriteLine("Type 1 Manage Stacks");
             Console.WriteLine("Type 2 Manage Flashcards");
-            Console.WriteLine("Type 3 Study");
-            Console.WriteLine("Type 4 View Study Session History");
+            Console.WriteLine("Type 3 Enter Study Area");
             Console.WriteLine("\n<---------------------------------------------------------->");
 
             string userInput = Console.ReadLine();
@@ -50,10 +49,7 @@ public class RunProgramUtil
                      ManageFlashcards();
                      break;
                 // case "3":
-                //     Study();
-                //     break;
-                // case "4":
-                //     ViewStudySessionHistory();
+                //     StudyArea();
                 //     break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
@@ -145,6 +141,43 @@ public class RunProgramUtil
                 case "4":
                     flashcardService.DeleteFlashcardById();
                     break;
+                default:
+                    Console.WriteLine("\nYou entered an invalid option, please try again.");
+                    break;
+            }
+        }
+    }
+
+    private static void StudyArea()
+    {
+        bool exitStudyArea = false;
+
+        while (exitStudyArea == false)
+        {
+            Console.Clear();
+            Console.WriteLine("Study Area:");
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine("<---------------------------------------------------------->\n");
+            Console.WriteLine("Type 0 to Return to Main Menu.");
+            Console.WriteLine("Type 1 to Start A Study Session");
+            Console.WriteLine("Type 2 to Review A Study Session");
+            Console.WriteLine("\n<---------------------------------------------------------->");
+            
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                case "0":
+                    Console.Clear();
+                    exitStudyArea = true;
+                    UserOptions();
+                    break;
+                // case "1":
+                //     studySessionService.StartStudySession();
+                //     break;
+                // case "2":
+                //     studySessionService.ReviewStudySession();
+                //     break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
                     break;

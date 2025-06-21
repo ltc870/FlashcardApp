@@ -8,11 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Repository\StudySessionRepository\" />
-      <Folder Include="Services\StudySessionService\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.5" />
     </ItemGroup>
