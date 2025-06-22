@@ -102,6 +102,14 @@ public class StudySessionService : IStudySessionService
         _studySessionRepository.SaveStudySession(session);
     }
 
+    public void GetAllStudySessions()
+    {
+        Console.Clear();
+        _studySessionRepository.GetAllStudySessions();
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+    }
+
     public void GetStudySessionById(int studySessionId)
     {
         throw new NotImplementedException();
