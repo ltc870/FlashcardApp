@@ -179,9 +179,9 @@ public class RunProgramUtil
                 case "1":
                     studySessionService.RunStudySession();
                     break;
-                // case "2":
-                //     studySessionService.ReviewStudySession();
-                //     break;
+                case "2":
+                    studySessionService.GetAllStudySessions();
+                    break;
                 default:
                     Console.WriteLine("\nYou entered an invalid option, please try again.");
                     break;

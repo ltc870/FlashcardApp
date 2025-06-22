@@ -81,6 +81,53 @@ public class StudySessionRepository : IStudySessionRepository
 
     public void GetAllStudySessions()
     {
-        throw new NotImplementedException();
+        List<StudySession> studySessionData = new  List<StudySession>();
+        using var connection = DbHelper.DbHelper.GetConnection();
+        connection.Open();
+        var cmd = new SqlCommand(@"SELECT ss.StudySessionId, ss.Date, ss.Score, s.Name As StackName 
+                                          FROM StudySessions ss 
+                                          JOIN Stacks s ON ss.StackId = s.StackId", connection);
+        try
+        {
+            using SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                Console.WriteLine("Study Sessions:");
+                while (reader.Read())
+                {
+                    studySessionData.Add(
+                        new StudySession
+                        {
+                            StudySessionId = reader.GetInt32(0),
+                            Date = reader.GetDateTime(1),
+                            Score = reader.GetInt32(2),
+                            StackName = reader.GetString(3)
+                        }
+                    );
+                }
+            }
+            else
+            {
+                Console.WriteLine("No study sessions found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while fetching study sessions: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            connection.Close();
+        }
+        
+        Console.WriteLine("<------------------------------------------>\n");
+        
+        foreach (var session in studySessionData)
+        {
+            Console.WriteLine($"Id: {session.StudySessionId} Date: {session.Date.ToShortDateString()} Score: {session.Score} StackId: {session.StackName}");
+        }
+        
+        Console.WriteLine("\n<------------------------------------------>\n");
     }
 }
