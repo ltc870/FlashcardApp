@@ -70,6 +70,13 @@ public class StudySessionService : IStudySessionService
                     Console.WriteLine("Press any key to continue to the next flashcard...");
                     Console.ReadLine();
                 }
+                else
+                {
+                    Console.WriteLine($"Incorrect! The correct answer is: {flashcards[i].BackText}");
+                    Console.WriteLine($"Your score is {score} out of {flashcards.Count}");
+                    Console.WriteLine("Press any key to continue to the next flashcard...");
+                    Console.ReadLine();
+                }
 
                 if (i == flashcards.Count - 1)
                 {
@@ -84,12 +91,14 @@ public class StudySessionService : IStudySessionService
 
         StudySession session = new StudySession
         {
-            Date = Convert.ToDateTime(DateTime.Now.ToString("MM-dd-yyyy")),
+            Date = Convert.ToDateTime(DateTime.Now.ToString("MM/dd/yyyy")),
             Score = score,
             StackId = stackIdValue
         };
         
         Console.WriteLine($"Saving study session for stack {stackName} with score {score} on {session.Date}");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
         _studySessionRepository.SaveStudySession(session);
     }
 
