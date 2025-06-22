@@ -1,5 +1,7 @@
+using FlashcardApp.DTOs.StudySessionDto;
 using FlashcardApp.Models.Flashcard;
 using FlashcardApp.Models.StudySession;
+using FlashcardApp.Utils;
 using Microsoft.Data.SqlClient;
 
 namespace FlashcardApp.Repository.StudySessionRepository;
@@ -125,7 +127,9 @@ public class StudySessionRepository : IStudySessionRepository
         
         foreach (var session in studySessionData)
         {
-            Console.WriteLine($"Id: {session.StudySessionId} Date: {session.Date.ToShortDateString()} Score: {session.Score} StackId: {session.StackName}");
+            StudySessionDto studySession = ModelToDtoMapperUtil.MapStudySessionToDto(session);
+            
+            Console.WriteLine($"Id: {studySession.StudySessionId} Date: {studySession.Date.ToShortDateString()} Score: {studySession.Score} StackId: {studySession.StackName}");
         }
         
         Console.WriteLine("\n<------------------------------------------>\n");
