@@ -8,7 +8,28 @@ public class StudySessionRepository : IStudySessionRepository
 {
     public void SaveStudySession(StudySession studySession)
     {
-        throw new NotImplementedException();
+        using var connection = DbHelper.DbHelper.GetConnection();
+        connection.Open();
+        var cmd = new SqlCommand(
+            @"INSERT INTO StudySessions (Date, Score, StackId) 
+              VALUES (@Date, @Score, @StackId)", connection);
+        cmd.Parameters.AddWithValue("@Date", studySession.Date);
+        cmd.Parameters.AddWithValue("@Score", studySession.Score);
+        cmd.Parameters.AddWithValue("@StackId", studySession.StackId);
+
+        try
+        {
+            cmd.ExecuteNonQuery();
+            Console.WriteLine("Study session saved successfully.");
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine($"An error occurred while saving the study session: {ex.Message}");
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     public List<Flashcard> GetFlashcardsForStudySession(int stackId)
