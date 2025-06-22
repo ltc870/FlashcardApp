@@ -72,10 +72,10 @@ public class RunProgramUtil
             Console.WriteLine("Manage Stacks Menu:");
             Console.WriteLine("<---------------------------------------------------------->\n");
             Console.WriteLine("Type 0 to Return to Main Menu.");
-            Console.WriteLine("Type 1 to View All Stacks");
-            Console.WriteLine("Type 2 to Create a New Stack");
-            Console.WriteLine("Type 3 to Edit a Stack");
-            Console.WriteLine("Type 4 to Delete a Stack");
+            Console.WriteLine("Type 1 to View All Stacks.");
+            Console.WriteLine("Type 2 to Create a New Stack.");
+            Console.WriteLine("Type 3 to Edit a Stack.");
+            Console.WriteLine("Type 4 to Delete a Stack.");
             Console.WriteLine("\n<---------------------------------------------------------->");
             
             string userInput = Console.ReadLine();
@@ -117,10 +117,10 @@ public class RunProgramUtil
             Console.WriteLine("Manage Flashcards Menu:");   
             Console.WriteLine("<---------------------------------------------------------->\n");
             Console.WriteLine("Type 0 to Return to Main Menu.");
-            Console.WriteLine("Type 1 to View All Flashcards");
-            Console.WriteLine("Type 2 to Create a New Flashcard");
-            Console.WriteLine("Type 3 to Edit a Flashcard");
-            Console.WriteLine("Type 4 to Delete a Flashcard");
+            Console.WriteLine("Type 1 to View All Flashcards.");
+            Console.WriteLine("Type 2 to Create a New Flashcard.");
+            Console.WriteLine("Type 3 to Edit a Flashcard.");
+            Console.WriteLine("Type 4 to Delete a Flashcard.");
             Console.WriteLine("\n<---------------------------------------------------------->");
 
             string userInput = Console.ReadLine();
@@ -163,8 +163,8 @@ public class RunProgramUtil
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("<---------------------------------------------------------->\n");
             Console.WriteLine("Type 0 to Return to Main Menu.");
-            Console.WriteLine("Type 1 to Start A Study Session");
-            Console.WriteLine("Type 2 to Review A Study Session");
+            Console.WriteLine("Type 1 to Start A Study Session.");
+            Console.WriteLine("Type 2 to View All Study Sessions.");
             Console.WriteLine("\n<---------------------------------------------------------->");
             
             string userInput = Console.ReadLine();
