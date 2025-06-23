@@ -1,6 +1,8 @@
-using FlashcardApp.Repository.DbHelper;
+using FlashcardApp.Models.Flashcard;
 using FlashcardApp.Repository.FlashcardRepository;
 using FlashcardApp.Repository.StackRepository;
+using FlashcardApp.Utils;
+using static FlashcardApp.Validation.Validation;
 
 namespace FlashcardApp.Services.FlashcardService;
 
@@ -17,7 +19,23 @@ public class FlashcardService : IFlashcardService
     {
         Console.Clear();
         Console.WriteLine("Viewing all flashcards...");
-        _flashcardRepository.ViewAllFlashcards();
+        List<Flashcard> flashcardData = _flashcardRepository.ViewAllFlashcards();
+        
+        Console.WriteLine("<------------------------------------------>\n");
+
+        
+        foreach (var flashcard in flashcardData)
+        {
+            var flashcardDto = ModelToDtoMapperUtil.MapFlashCardToDto(flashcard);
+            
+            Console.WriteLine($"Id: {flashcardDto.FlashcardId} Stack: {flashcardDto.StackName} - Front: {flashcardDto.FrontText} | Back: {flashcardDto.BackText}");
+            
+        }
+        
+        Console.WriteLine("\n<------------------------------------------>\n");
+        
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
     }
 
     public void CreateFlashcard()
@@ -97,6 +115,7 @@ public class FlashcardService : IFlashcardService
     public void UpdateFlashcardById()
     {
         int flashcardId;
+        var validation = new Validation.Validation(_flashcardRepository);
         
         Console.Clear();
         Console.WriteLine("Updating flashcard...");
@@ -110,9 +129,18 @@ public class FlashcardService : IFlashcardService
         {
             flashcardIdInput = Console.ReadLine()?.Trim();
             
+            bool flashcardIdExists = validation.DoesFlashcardIdExist(flashcardIdInput);
+            
             if (flashcardIdInput == "0")
             {
                 Console.WriteLine("Canceling operation. Press any key to continue...");
+                Console.ReadLine();
+                return;
+            }
+            
+            if (!flashcardIdExists)
+            {
+                Console.WriteLine("Flashcard ID does not exist. Canceling operation. Press any key to continue...");
                 Console.ReadLine();
                 return;
             }
@@ -168,6 +196,7 @@ public class FlashcardService : IFlashcardService
         Console.WriteLine("Enter the ID of the flashcard you want to delete or enter 0 to exit:");
         string? flashcardIdInput;
         int flashcardId;
+        var validation = new Validation.Validation(_flashcardRepository);
         
         do
         {
@@ -179,6 +208,16 @@ public class FlashcardService : IFlashcardService
                 Console.ReadLine();
                 return;
             }
+            
+            bool flashcardIdExists = validation.DoesFlashcardIdExist(flashcardIdInput);
+            
+            if (!flashcardIdExists)
+            {
+                Console.WriteLine("Flashcard ID does not exist. Canceling operation. Press any key to continue...");
+                Console.ReadLine();
+                return;
+            }
+            
             
             if (string.IsNullOrEmpty(flashcardIdInput) || !int.TryParse(flashcardIdInput, out flashcardId))
             {
