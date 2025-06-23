@@ -1,7 +1,9 @@
+using FlashcardApp.DTOs.StudySessionDto;
 using FlashcardApp.Models.Flashcard;
 using FlashcardApp.Models.StudySession;
 using FlashcardApp.Repository.StudySessionRepository;
 using FlashcardApp.Services.StackService;
+using FlashcardApp.Utils;
 
 namespace FlashcardApp.Services.StudySessionService;
 
@@ -21,13 +23,21 @@ public class StudySessionService : IStudySessionService
     {
         _stackService.ViewAllStacks();
         
-        Console.WriteLine("Please select a stack to study from by entering the stack ID:");
+        Console.WriteLine("Please select a stack to study from by entering the stack ID or enter 0 to cancel operation:");
         string? stackIdInput;
         int stackIdValue;
 
         do
         {
             stackIdInput = Console.ReadLine()?.Trim();
+            
+            if (stackIdInput == "0")
+            {
+                Console.WriteLine("Canceling operation. Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+            
             if (string.IsNullOrEmpty(stackIdInput) || !int.TryParse(stackIdInput, out stackIdValue))
             {
                 Console.WriteLine("Invalid input. Please enter a valid stack ID.");
@@ -105,13 +115,24 @@ public class StudySessionService : IStudySessionService
     public void GetAllStudySessions()
     {
         Console.Clear();
-        _studySessionRepository.GetAllStudySessions();
+        
+        Console.WriteLine("Viewing all study sessions...");
+        
+        List<StudySession> studySessionData =  _studySessionRepository.GetAllStudySessions();
+        
+        Console.WriteLine("<------------------------------------------>\n");
+        
+        foreach (var session in studySessionData)
+        {
+            StudySessionDto studySession = ModelToDtoMapperUtil.MapStudySessionToDto(session);
+            
+            Console.WriteLine($"Id: {studySession.StudySessionId} Date: {studySession.Date.ToShortDateString()} Score: {studySession.Score} StackId: {studySession.StackName}");
+        }
+        
+        Console.WriteLine("\n<------------------------------------------>\n");
+        
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
-
-    public void GetStudySessionById(int studySessionId)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
