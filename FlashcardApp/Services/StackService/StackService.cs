@@ -21,8 +21,15 @@ public class StackService : IStackService
     public void CreateStack()
     {
         Console.Clear();
-        Console.WriteLine("What is the name of the stack you would like to create?");
+        Console.WriteLine("Name the stack you would like to create, or enter 0 to cancel operation:");
         string? stackName = Console.ReadLine()?.Trim();
+        
+        if (stackName == "0")
+        {
+            Console.WriteLine("Canceling operation. Press any key to continue...");
+            Console.ReadKey();
+            return;
+        }
         
         if (string.IsNullOrEmpty(stackName))
         {
@@ -38,7 +45,7 @@ public class StackService : IStackService
         Console.WriteLine("Updating a stack...");
         ViewAllStacks();
         
-        Console.WriteLine("Enter the ID of the stack you want to update:");
+        Console.WriteLine("Enter the ID of the stack you want to update or enter 0 to cancel operation:");
 
         string? newStackId;
         int newStackIdValue;
@@ -46,15 +53,30 @@ public class StackService : IStackService
         do
         {
             newStackId = Console.ReadLine()?.Trim();
+            
+            if (newStackId == "0")
+            {
+                Console.WriteLine("Canceling operation. Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+            
             if (string.IsNullOrEmpty(newStackId) || !int.TryParse(newStackId, out newStackIdValue))
             {
                 Console.WriteLine("Invalid input. Please enter a valid stack ID.");
             }
         } while (string.IsNullOrEmpty(newStackId) || !int.TryParse(newStackId, out newStackIdValue));
         
-        Console.WriteLine("Enter the new name for the stack:");
+        Console.WriteLine("Enter the new name for the stack or enter 0 to cancel operation:");
         
         string? newStackName = Console.ReadLine()?.Trim();
+        
+        if (newStackName == "0")
+        {
+            Console.WriteLine("Canceling operation. Press any key to continue...");
+            Console.ReadKey();
+            return;
+        }
         
         if (string.IsNullOrEmpty(newStackName))
         {
@@ -71,13 +93,21 @@ public class StackService : IStackService
         Console.WriteLine("Delete a stack...");
         ViewAllStacks();
         
-        Console.WriteLine("Enter the ID of the stack you want to delete:");
+        Console.WriteLine("Enter the ID of the stack you want to delete or enter 0 to cancel operation:");
         string? input;
         int itemId;
         
         do
         {
             input = Console.ReadLine()?.Trim();
+            
+            if (input == "0")
+            {
+                Console.WriteLine("Canceling operation. Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+            
             if (string.IsNullOrEmpty(input) || !int.TryParse(input, out itemId) || itemId <= 0)
             {
                 Console.WriteLine("Invalid ID. Please enter a valid positive integer ID:");
