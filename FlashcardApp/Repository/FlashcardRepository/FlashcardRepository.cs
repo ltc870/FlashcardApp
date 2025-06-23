@@ -6,7 +6,7 @@ namespace FlashcardApp.Repository.FlashcardRepository;
 
 public class FlashcardRepository : IFlashcardRepository
 {
-    public void ViewAllFlashcards()
+    public List<Flashcard> ViewAllFlashcards()
     {
         List<Flashcard> flashcardData = new List<Flashcard>();
 
@@ -45,22 +45,8 @@ public class FlashcardRepository : IFlashcardRepository
         {
             connection.Close();
         }
-        
-        Console.WriteLine("<------------------------------------------>\n");
 
-        
-        foreach (var flashcard in flashcardData)
-        {
-            var flashcardDto = ModelToDtoMapperUtil.MapFlashCardToDto(flashcard);
-            
-            Console.WriteLine($"Id: {flashcardDto.FlashcardId} Stack: {flashcardDto.StackName} - Front: {flashcardDto.FrontText} | Back: {flashcardDto.BackText}");
-            
-        }
-        
-        Console.WriteLine("\n<------------------------------------------>\n");
-        
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadLine();
+        return flashcardData;
     }
 
     public void CreateFlashcard(int stackId, string frontText, string backText)
