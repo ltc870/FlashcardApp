@@ -1,3 +1,4 @@
+using FlashcardApp.Models.Stack;
 using FlashcardApp.Repository.StackRepository;
 
 namespace FlashcardApp.Services.StackService;
@@ -15,7 +16,17 @@ public class StackService : IStackService
     {
         Console.Clear();
         Console.WriteLine("Fetching all stacks...");
-        _stackRepository.ViewAllStacks();
+        
+        List<Stack> stackData = _stackRepository.ViewAllStacks();
+        
+        Console.WriteLine("<------------------------------------------>\n");
+        foreach (Stack stack in stackData)
+        {
+            Console.WriteLine($"{stack.StackId}. {stack.Name}");
+        }
+        Console.WriteLine("\n<------------------------------------------>");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
     }
     
     public void CreateStack()
@@ -49,15 +60,26 @@ public class StackService : IStackService
 
         string? newStackId;
         int newStackIdValue;
+        var validation = new Validation.Validation(new StackRepository());
+        
 
         do
         {
             newStackId = Console.ReadLine()?.Trim();
+
+            bool stackIdExists = validation.DoesStackIdExist(newStackId);
             
             if (newStackId == "0")
             {
                 Console.WriteLine("Canceling operation. Press any key to continue...");
                 Console.ReadKey();
+                return;
+            }
+            
+            if (!stackIdExists)
+            {
+                Console.WriteLine("Stack ID does not exist. Canceling operation. Press any key to continue...");
+                Console.ReadLine();
                 return;
             }
             
@@ -96,10 +118,13 @@ public class StackService : IStackService
         Console.WriteLine("Enter the ID of the stack you want to delete or enter 0 to cancel operation:");
         string? input;
         int itemId;
+        var validation = new Validation.Validation(new StackRepository());
         
         do
         {
             input = Console.ReadLine()?.Trim();
+            
+            bool stackIdExists = validation.DoesStackIdExist(input);
             
             if (input == "0")
             {
@@ -107,6 +132,14 @@ public class StackService : IStackService
                 Console.ReadKey();
                 return;
             }
+            
+            if (!stackIdExists)
+            {
+                Console.WriteLine("Stack ID does not exist. Canceling operation. Press any key to continue...");
+                Console.ReadLine();
+                return;
+            }
+            
             
             if (string.IsNullOrEmpty(input) || !int.TryParse(input, out itemId) || itemId <= 0)
             {
