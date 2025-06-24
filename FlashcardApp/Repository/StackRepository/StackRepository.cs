@@ -6,7 +6,7 @@ namespace FlashcardApp.Repository.StackRepository;
 
 public class StackRepository : IStackRepository
 {
-    public void ViewAllStacks()
+    public List<Stack> ViewAllStacks()
     {
         List<Stack> stackData = new List<Stack>();
         using var connection = DbHelper.DbHelper.GetConnection();
@@ -43,15 +43,8 @@ public class StackRepository : IStackRepository
         }
         
         stackData = new List<Stack>(stackData.OrderBy(s => s.StackId));
-        
-        Console.WriteLine("<------------------------------------------>\n");
-        foreach (Stack stack in stackData)
-        {
-            Console.WriteLine($"{stack.StackId}. {stack.Name}");
-        }
-        Console.WriteLine("\n<------------------------------------------>");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadLine();
+
+        return stackData;
     }
     
     public void CreateStack(string stackName)
